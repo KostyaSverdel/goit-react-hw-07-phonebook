@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from '../ContactListItem/ContactListItem.module.css';
+import { useDispatch } from 'react-redux';
+import { deleteContactAsync } from '../../redux/contactsSlice';
+import { MdDelete } from 'react-icons/md';
+import css from './ContactListItem.module.css';
 
-function ContactListItem({ id, name, number, onDeleteContact }) {
+function ContactListItem({ id, name, phone }) {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteContactAsync(id));
+  };
+
   return (
-    <li>
-      {name}: {number}
-      <button className={css.ButtonsDelete} onClick={() => onDeleteContact(id)}>
-        Delete
+    <li className={css.item}>
+      {name}: {phone}
+      <button className={css.button} onClick={handleDelete}>
+        <MdDelete />
       </button>
     </li>
   );
@@ -16,8 +24,7 @@ function ContactListItem({ id, name, number, onDeleteContact }) {
 ContactListItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
+  phone: PropTypes.string.isRequired,
 };
 
 export default ContactListItem;

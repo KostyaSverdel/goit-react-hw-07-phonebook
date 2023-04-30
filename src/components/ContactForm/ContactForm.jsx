@@ -7,7 +7,7 @@ import css from '../ContactForm/ContactForm.module.css';
 function ContactForm() {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const contacts = useSelector(state => state.contacts.contacts);
 
@@ -16,15 +16,15 @@ function ContactForm() {
   };
 
   const handleNumberChange = e => {
-    setNumber(e.target.value);
+    setPhone(e.target.value);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
     const isNameExist = contacts.find(contact => contact.name === name);
-    const isNumberExist = contacts.find(contact => contact.number === number);
+    const isNumberExist = contacts.find(contact => contact.phone === phone);
 
-    if (!name || !number) {
+    if (!name || !phone) {
       alert('Please provide both name and number');
       return;
     }
@@ -33,13 +33,13 @@ function ContactForm() {
       return;
     }
     if (isNumberExist) {
-      alert(`${number} is already in contacts!`);
+      alert(`${phone} is already in contacts!`);
       return;
     }
     try {
-      await dispatch(addContactAsync({ name, number }));
+      await dispatch(addContactAsync({ name, phone }));
       setName('');
-      setNumber('');
+      setPhone('');
     } catch (error) {
       console.error(error);
     }
@@ -63,7 +63,7 @@ function ContactForm() {
           className={css.inputsForm}
           type="tel"
           name="number"
-          value={number}
+          value={phone}
           onChange={handleNumberChange}
         />
       </label>
