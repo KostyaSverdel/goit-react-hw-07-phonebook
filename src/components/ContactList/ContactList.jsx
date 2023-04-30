@@ -1,46 +1,45 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contactsSlice';
-import ContactListItem from '../ContactListItem/ContactListItem';
-import css from '../ContactList/ContactList.module.css';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchContactsAsync,
+  deleteContactAsync,
+} from '../../redux/contactsSlice';
+import ContactItem from '../ContactItem/ContactItem';
+import css from './ContactList.module.css';
 
 function ContactList() {
   const dispatch = useDispatch();
-  const filter = useSelector(state => state.contacts.filter);
   const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.contacts.filter);
 
-  const filteredContacts = contacts.filter(contact => {
-    return contact.name.toLowerCase().includes(filter.toLowerCase());
-  });
+  useEffect(() => {
+    dispatch(fetchContactsAsync());
+  }, [dispatch]);
 
-  const handleDeleteContact = contact => {
-    dispatch(deleteContact(contact));
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  const handleDeleteContact = async contactId => {
+    try {
+      await dispatch(deleteContactAsync(contactId));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <ul className={css.ContactListConteiner}>
+    <ul className={css.phoneList}>
       {filteredContacts.map(({ id, name, number }) => (
-        <ContactListItem
+        <ContactItem
           key={id}
-          id={id}
           name={name}
           number={number}
-          onDeleteContact={() => handleDeleteContact({ id, name, number })}
+          onDelete={() => handleDeleteContact(id)}
         />
       ))}
     </ul>
   );
 }
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
 
 export default ContactList;

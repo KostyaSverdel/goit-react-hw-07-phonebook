@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
+import { addContactAsync } from '../../redux/contactsSlice';
 import css from '../ContactForm/ContactForm.module.css';
 
 function ContactForm() {
@@ -19,7 +19,7 @@ function ContactForm() {
     setNumber(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const isNameExist = contacts.find(contact => contact.name === name);
     const isNumberExist = contacts.find(contact => contact.number === number);
@@ -36,9 +36,13 @@ function ContactForm() {
       alert(`${number} is already in contacts!`);
       return;
     }
-    dispatch(addContact({ name, number }));
-    setName('');
-    setNumber('');
+    try {
+      await dispatch(addContactAsync({ name, number }));
+      setName('');
+      setNumber('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
