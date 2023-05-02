@@ -19,7 +19,7 @@ function ContactList() {
   });
 
   return (
-    <ul className={css.list}>
+    <ul className={css.ContactListConteiner}>
       {isLoading ? (
         <p>Loading...</p>
       ) : (

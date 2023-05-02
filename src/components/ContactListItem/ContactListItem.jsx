@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { deleteContactAsync } from '../../redux/contactsSlice';
-import { MdDelete } from 'react-icons/md';
 import css from './ContactListItem.module.css';
 
 function ContactListItem({ id, name, phone }) {
@@ -14,11 +13,9 @@ function ContactListItem({ id, name, phone }) {
   return (
     <li className={css.item}>
       {name}: {phone}
-      <div className={css.dqwdqwd}>
-        <button className={css.ButtonsDelete} onClick={handleDelete}>
-          <MdDelete />
-        </button>
-      </div>
+      <button className={css.ButtonsDelete} onClick={handleDelete}>
+        Delete
+      </button>
     </li>
   );
 }

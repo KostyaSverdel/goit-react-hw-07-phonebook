@@ -12,11 +12,11 @@ function Filter() {
   };
 
   return (
-    <div className={css.filter}>
-      <label className={css.label}>
+    <div className={css.FilterConteiner}>
+      <label className={css.FilterLabel}>
         Find contacts by name
         <input
-          className={css.input}
+          className={css.FilterInputs}
           type="text"
           value={filter}
           onChange={handleFilterChange}
