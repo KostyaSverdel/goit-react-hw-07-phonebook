@@ -7,18 +7,23 @@ import css from './ContactList.module.css';
 function ContactList() {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.contacts.filter);
   const isLoading = useSelector(state => state.contacts.isLoading);
 
   useEffect(() => {
     dispatch(fetchContactsAsync());
   }, [dispatch]);
 
+  const filteredContacts = contacts.filter(contact => {
+    return contact.name.toLowerCase().includes(filter.toLowerCase());
+  });
+
   return (
     <ul className={css.list}>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        contacts.map(contact => (
+        filteredContacts.map(contact => (
           <ContactListItem key={contact.id} {...contact} />
         ))
       )}

@@ -2,10 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './api';
 
 const initialState = {
-  contacts: [],
-  isLoading: false,
-  error: null,
-  filter: '',
+  contacts: {
+    items: [],
+    isLoading: false,
+    error: null
+  },
+  filter: ""
 };
 
 export const fetchContactsAsync = createAsyncThunk(
@@ -36,7 +38,7 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    setFilter(state, action) {
+    setFilter (state, action) {
       state.filter = action.payload;
     },
   },

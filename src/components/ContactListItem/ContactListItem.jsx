@@ -14,9 +14,11 @@ function ContactListItem({ id, name, phone }) {
   return (
     <li className={css.item}>
       {name}: {phone}
-      <button className={css.button} onClick={handleDelete}>
-        <MdDelete />
-      </button>
+      <div className={css.dqwdqwd}>
+        <button className={css.ButtonsDelete} onClick={handleDelete}>
+          <MdDelete />
+        </button>
+      </div>
     </li>
   );
 }

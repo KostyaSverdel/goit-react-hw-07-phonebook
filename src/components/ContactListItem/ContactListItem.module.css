@@ -1,8 +1,13 @@
 .ButtonsDelete {
+    border: none;
     margin-left: 10px;
-    width: 100px;
     height: 50px;
-    background-color: cornflowerblue;
+    width: 50px;
+    margin-top: 10px;
+    background-color: red;
     border-radius: 50%;
-    border: aqua;
+}
+
+.dqwdqwd {
+    display: block;
 }
